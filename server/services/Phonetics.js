@@ -9,13 +9,17 @@ class Phonetics {
     const fr = new FileReader();
 
     return new Promise(async (resolve, reject) => {
-      const res = await fr.findLineByWord(this.word.toUpperCase());
+      try {
+        const res = await fr.findLineByWord(this.word.toUpperCase());
 
-      if (!res || !res.phonetics) {
-        reject(res);
+        if (!res || !res.phonetics) {
+          throw new Error("Word not found.");
+        }
+
+        resolve(res.phonetics);
+      } catch (error) {
+        reject(error);
       }
-
-      resolve(res.phonetics);
     });
   }
 }

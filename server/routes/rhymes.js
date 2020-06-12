@@ -9,9 +9,22 @@ router.get("/:word", function (req, res, next) {
   }
 
   const wordPhonetics = new Phonetics(req.params.word);
-  wordPhonetics.findWordPhonetics().then((response) => {
-    res.send(response);
-  });
+  wordPhonetics.findWordPhonetics().then(
+    (response) => {
+      res.send({
+        status: 200,
+        type: "SUCCESS",
+        message: response,
+      });
+    },
+    (error) => {
+      res.send({
+        status: 200,
+        type: "ERROR",
+        message: "Word was not found on our dictionary.",
+      });
+    }
+  );
 });
 
 module.exports = router;

@@ -1,11 +1,10 @@
 var fs = require("fs");
 var path = require("path");
+const { exception } = require("console");
 
 const pattern = /\n([A-Z]*)(\(1\))\s\s/;
 
 class FileReader {
-  chunk = "";
-  foundChunk = false;
   readingStream = null;
   word = "";
 
@@ -20,7 +19,7 @@ class FileReader {
     const match = this.findLineInChunk(chunk);
 
     if (!match) {
-      return null;
+      throw new Error("Word was not found.");
     }
 
     return {
@@ -31,8 +30,10 @@ class FileReader {
   }
 
   createStream() {
+    const dictionaryFile = `${this.word.substring(0, 1)}.txt`;
+
     this.readingStream = fs.createReadStream(
-      path.resolve(__dirname, "../data/a.txt"),
+      path.resolve(__dirname, `../data/${dictionaryFile}`),
       {
         encoding: "utf8",
         highWaterMark: 16 * 1024,
