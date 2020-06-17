@@ -62,6 +62,8 @@ which is dictated by the location of the final stressed syllable.
   syllable of the words (picky, tricky).
 - `dactylics`: a rhyme in which the stress is on the antepenultimate (third from
   last) syllable (cacophonies, Aristophanes).
+- `same`: they are the same word. Rhyming "Homer" with "Homer".
+- `null`: these words do not rhyme.
 
 #### Example
 

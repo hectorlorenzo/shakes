@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { Phonetics } = require("../services/Phonetics");
+const { getPhonetics } = require("../services/Phonetics");
 
 /* GET home page. */
 router.get("/:word", function (req, res, next) {
@@ -8,8 +8,7 @@ router.get("/:word", function (req, res, next) {
     throw new Error("No word has been sent.");
   }
 
-  const wordPhonetics = new Phonetics(req.params.word);
-  wordPhonetics.findWordPhonetics().then(
+  getPhonetics(req.params.word).then(
     (response) => {
       res.send({
         status: 200,

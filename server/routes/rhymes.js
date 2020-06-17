@@ -1,27 +1,28 @@
 var express = require("express");
 var router = express.Router();
-const { Phonetics } = require("../services/Phonetics");
+const { wordsRhyme } = require("../services/Phonetics");
 
 /* GET home page. */
-router.get("/:word", function (req, res, next) {
-  if (!req.params || !req.params.word) {
-    throw new Error("No word has been sent.");
+router.get("/:word1/:word2", function (req, res, next) {
+  if (!req.params || !req.params.word1 || !req.params.word2) {
+    throw new Error("You are missing one or two words.");
   }
 
-  const wordPhonetics = new Phonetics(req.params.word);
-  wordPhonetics.findWordPhonetics().then(
-    (response) => {
+  wordsRhyme(req.params.word1, req.params.word2).then(
+    (phonetics) => {
+      console.log("SUCCESS");
       res.send({
         status: 200,
         type: "SUCCESS",
-        message: response,
+        message: phonetics,
       });
     },
     (error) => {
+      console.log("FAIL");
       res.send({
         status: 200,
         type: "ERROR",
-        message: "Word was not found on our dictionary.",
+        message: error,
       });
     }
   );

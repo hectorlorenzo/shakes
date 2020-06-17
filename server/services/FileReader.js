@@ -42,7 +42,7 @@ class FileReader {
   }
 
   findLineInChunk(chunk) {
-    const wordRegex = new RegExp("(" + this.word + `)\\s\\s(.*)\\n`);
+    const wordRegex = new RegExp("\\n(" + this.word + `)\\s\\s(.*)\\n`);
     return chunk.match(wordRegex);
   }
 
