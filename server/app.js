@@ -6,6 +6,7 @@ var logger = require("morgan");
 var cors = require("cors");
 
 var indexRouter = require("./routes/index");
+var phoneticsRouter = require("./routes/phonetics");
 var rhymesRouter = require("./routes/rhymes");
 
 var app = express();
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use("/", indexRouter);
+app.use("/phonetics", phoneticsRouter);
 app.use("/rhymes", rhymesRouter);
 
 // catch 404 and forward to error handler
