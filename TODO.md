@@ -8,5 +8,6 @@
 - [x] It should save the poem (locally).
 - [ ] Show different errors depending on number of syllabes or not rhyming.
 - [ ] Catch words with one character (`aaaaaaaaaa`).
+- [ ] Improve error handling on PagePoem when getting random poem.
 
 ## Server

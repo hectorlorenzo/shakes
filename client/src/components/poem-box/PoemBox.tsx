@@ -1,7 +1,7 @@
 import React from "react";
 import { navigate } from "@reach/router";
 
-import { storePoem } from "../../services/PoemStore";
+import { PoemInfo, storePoem } from "../../services/PoemStore";
 import { PoemLine } from "../poem-line/PoemLine";
 
 // const exampleSonnet = `Within a thick and spreading hawthorn bush
@@ -20,12 +20,12 @@ import { PoemLine } from "../poem-line/PoemLine";
 // Glad as the sunshine and the laughing sky.`;
 
 interface PoemBoxProps {
-  poem: string[];
+  poem: PoemInfo;
 }
 
-const onChangeLine = (line: string, poem: string[]) => {
+const onChangeLine = (line: string, poem: PoemInfo) => {
   try {
-    storePoem(poem.concat([line]).join("\n"));
+    storePoem(poem.poem.concat([line]).join("\n"), poem.uuid);
     navigate("/");
   } catch (error) {
     throw new Error(`Hey, there was an error: ${error}`);
@@ -35,7 +35,9 @@ const onChangeLine = (line: string, poem: string[]) => {
 export const PoemBox: React.SFC<PoemBoxProps> = ({ poem }) => {
   return (
     <>
-      <p style={{ whiteSpace: "pre", lineHeight: "1.4" }}>{poem}</p>
+      <p style={{ whiteSpace: "pre", lineHeight: "1.4" }}>
+        {poem.poem.join("\n")}
+      </p>
       <PoemLine onSubmit={(line) => onChangeLine(line, poem)} rhymesWith="" />
     </>
   );
