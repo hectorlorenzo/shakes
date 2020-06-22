@@ -11,7 +11,7 @@ const App: React.SFC<{}> = () => {
     <>
       <Router>
         <PageHome path="/" />
-        <PagePoem path="/poem" />
+        <PagePoem path="/poem/:action" />
       </Router>
     </>
   );

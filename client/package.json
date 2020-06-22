@@ -12,11 +12,15 @@
     "@types/reach__router": "^1.3.5",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/syllable": "^4.1.0",
+    "@types/uuid": "^8.0.0",
     "cross-env": "5.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "typescript": "~3.7.2"
+    "syllable": "^4.1.0",
+    "typescript": "~3.7.2",
+    "uuid": "^8.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

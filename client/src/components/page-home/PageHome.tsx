@@ -5,7 +5,8 @@ export const PageHome: React.SFC<RouteComponentProps> = () => (
   <>
     <h2>Welcome to Shakes</h2>
     <nav>
-      <Link to="/poem">Create a poem</Link>
+      <Link to="/poem/create">Create a poem</Link>
+      <Link to="/poem/join">Join a poem</Link>
       <Link to="/about">About</Link>
     </nav>
   </>

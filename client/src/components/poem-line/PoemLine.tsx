@@ -1,44 +1,77 @@
 import React from "react";
+import syllable from "syllable";
+
+interface PoemLineProps {
+  onSubmit: (line: string) => void;
+  rhymesWith: string;
+}
 
 interface PoemLineState {
   lineValue: string;
+  error: boolean;
+  currentNumberOfSyllables: number;
 }
 
-export class PoemLine extends React.Component<{}, PoemLineState> {
+export class PoemLine extends React.Component<PoemLineProps, PoemLineState> {
   state = {
     lineValue: "",
+    error: false,
+    currentNumberOfSyllables: 0,
   };
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ lineValue: event.target.value });
+    const lineValue = event.target.value;
+    this.setState({ lineValue, currentNumberOfSyllables: syllable(lineValue) });
   };
 
-  handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    this.checkLinePhonetics();
-  };
+    this.setState({ error: false });
 
-  checkLinePhonetics() {
     const words = this.state.lineValue.split(" ");
     const lastWord = words[words.length - 1];
 
-    fetch(`http://localhost:9000/rhymes/${lastWord}`)
+    const rhymes = await this.doesItRhyme(lastWord, this.props.rhymesWith);
+
+    if (rhymes && this.state.currentNumberOfSyllables === 10) {
+      this.props.onSubmit(this.state.lineValue);
+    } else {
+      this.setState({ error: true });
+    }
+  };
+
+  countSyllabes = (word: string): number => syllable(word);
+
+  doesItRhyme = (word: string, rhymeWord: string): Promise<boolean> => {
+    if (!rhymeWord) {
+      return Promise.resolve(true);
+    }
+
+    return fetch(`http://localhost:9000/rhymes/${word}`)
       .then((response) => response.text())
       .then((response) => {
         console.log(response);
+        return true;
       });
-  }
+  };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          value={this.state.lineValue}
-          onChange={this.handleChange}
-        />
-        <button>Submit</button>
-      </form>
+      <>
+        {this.state.error && <p>There is an error</p>}
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            value={this.state.lineValue}
+            onChange={this.handleChange}
+            style={{
+              width: "300px",
+            }}
+          />
+          <button>Submit</button>
+        </form>
+        <pre>{this.state.currentNumberOfSyllables}</pre>
+      </>
     );
   }
 }

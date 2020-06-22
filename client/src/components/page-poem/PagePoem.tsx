@@ -6,6 +6,6 @@ import { PoemBox } from "../poem-box/PoemBox";
 export const PagePoem: React.SFC<RouteComponentProps> = () => (
   <div>
     <h2>Poem</h2>
-    <PoemBox />
+    <PoemBox poem={[]} />
   </div>
 );
