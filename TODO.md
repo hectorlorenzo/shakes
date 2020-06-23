@@ -9,5 +9,9 @@
 - [ ] Show different errors depending on number of syllabes or not rhyming.
 - [ ] Catch words with one character (`aaaaaaaaaa`).
 - [ ] Improve error handling on PagePoem when getting random poem.
+- [ ] Make sure word rhymes with last word of last line when joining a poem.
 
 ## Server
+
+- [ ] We should only return the last line and the rhyme word of a poem when
+      joining.

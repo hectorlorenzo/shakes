@@ -1,7 +1,7 @@
 import React from "react";
 import { RouteComponentProps } from "@reach/router";
 
-import { getRandomPoem } from "../../services/PoemStore";
+import Poem from "../../modules/Poem";
 import { PoemBox } from "../poem-box/PoemBox";
 
 interface PagePoemProps extends RouteComponentProps {
@@ -11,16 +11,16 @@ interface PagePoemProps extends RouteComponentProps {
 export const PagePoem: React.SFC<PagePoemProps> = ({ action }) => {
   const poemInfo =
     action === "join"
-      ? getRandomPoem()
+      ? Poem.storage.getRandomPoem()
       : {
-          poem: [],
+          poem: "",
           uuid: "",
         };
 
   return (
     <div>
       <h2>Poem</h2>
-      <PoemBox poem={poemInfo} />
+      <PoemBox poemText={poemInfo.poem} poemUuid={poemInfo.uuid} />
     </div>
   );
 };

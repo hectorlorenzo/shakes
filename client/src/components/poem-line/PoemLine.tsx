@@ -47,12 +47,15 @@ export class PoemLine extends React.Component<PoemLineProps, PoemLineState> {
       return Promise.resolve(true);
     }
 
-    return fetch(`http://localhost:9000/rhymes/${word}`)
-      .then((response) => response.text())
-      .then((response) => {
-        console.log(response);
-        return true;
-      });
+    return fetch(`http://localhost:9000/rhymes/${word}/${rhymeWord}`)
+      .then((response) => response.json())
+      .then(({ type, message }) => {
+        if (type === "SUCCESS" && message.match) {
+          return true;
+        }
+        return false;
+      })
+      .catch(() => false);
   };
 
   render() {
